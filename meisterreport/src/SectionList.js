@@ -5,6 +5,7 @@ function buildList(taskList, sections, persons) {
     var sectionList = [];
     sections.forEach(section => {
         var sectionEntry = {};
+        sectionEntry.id = section.id;
         sectionEntry.name = section.name;
         sectionEntry.color = section.color;
 
@@ -48,7 +49,7 @@ class SectionList extends React.Component {
 
     render() {
         return (
-            <div className="sectionlist">
+            <div id="accordion" className="sectionlist">
                 {this.sectionList.map(sectionEntry => <Section section={sectionEntry} />)}
             </div>
         );

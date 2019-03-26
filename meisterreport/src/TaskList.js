@@ -3,7 +3,7 @@ import Task from './Task';
 
 function TaskList(props) {
     return (
-        <div>
+        <div id="accordionTask">
             {props.tasks.map(task => <Task task={task}/>)}
         </div>
     );
