@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./App.css";
-import { Card } from 'bootstrap';
 
 import SectionList from "./SectionList";
 /*
@@ -35,7 +34,6 @@ const sectionsList = [
     updated_at: "2019-02-01T08:27:39.218709Z"
   }*/
 
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -54,7 +52,7 @@ class App extends Component {
         "cache-control": "no-cache",
         "Content-Type": "application/json"
       }
-    }).then(function (response) {
+    }).then(function(response) {
       if (response.ok) {
         return response.json();
       } else {
@@ -66,10 +64,10 @@ class App extends Component {
   getSections(token, project_id) {
     return fetch(
       "https://" +
-      this.host +
-      "/api/projects/" +
-      project_id +
-      "/sections?status=active",
+        this.host +
+        "/api/projects/" +
+        project_id +
+        "/sections?status=active",
       {
         method: "GET",
         Host: this.host,
@@ -81,7 +79,7 @@ class App extends Component {
           "Content-Type": "application/json"
         }
       }
-    ).then(function (response) {
+    ).then(function(response) {
       if (response.ok) {
         return response.json();
       } else {
@@ -93,10 +91,10 @@ class App extends Component {
   getTasks(token, project_id) {
     return fetch(
       "https://" +
-      this.host +
-      "/api/projects/" +
-      project_id +
-      "/tasks?status=open",
+        this.host +
+        "/api/projects/" +
+        project_id +
+        "/tasks?status=open",
       {
         method: "GET",
         Host: this.host,
@@ -109,7 +107,7 @@ class App extends Component {
           "Content-Type": "application/json"
         }
       }
-    ).then(function (response) {
+    ).then(function(response) {
       if (response.ok) {
         return response.json();
       } else {
@@ -120,11 +118,7 @@ class App extends Component {
 
   getPersons(token, project_id) {
     return fetch(
-      "https://" +
-      this.host +
-      "/api/projects/" +
-      project_id +
-      "/persons",
+      "https://" + this.host + "/api/projects/" + project_id + "/persons",
       {
         method: "GET",
         Host: this.host,
@@ -137,7 +131,7 @@ class App extends Component {
           "Content-Type": "application/json"
         }
       }
-    ).then(function (response) {
+    ).then(function(response) {
       if (response.ok) {
         return response.json();
       } else {
@@ -194,14 +188,19 @@ class App extends Component {
       return <div>Loading ...</div>;
     } else {
       return (
-        <div className="container">
-          <div>Compte rendu de tâches</div>
-
-          <SectionList
-            taskList={this.state.tasksList}
-            sections={this.state.sectionsList}
-            persons={this.state.personsList}
-          />
+        <div>
+          <div className="jumbotron jumbotron-fluid">
+            <div className="container">
+              <h1>Compte rendu de tâches</h1>
+            </div>
+          </div>
+          <div className="container">
+            <SectionList
+              taskList={this.state.tasksList}
+              sections={this.state.sectionsList}
+              persons={this.state.personsList}
+            />
+          </div>
         </div>
       );
     }

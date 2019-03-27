@@ -5,16 +5,15 @@ function buildList(taskList, sections, persons) {
     var sectionList = [];
     sections.forEach(section => {
         var sectionEntry = {};
+
         sectionEntry.id = section.id;
         sectionEntry.name = section.name;
         sectionEntry.color = section.color;
 
         const tasks = taskList.filter(task => task.section_id === section.id);
-        //console.log(tasks);
 
         tasks.forEach(task => {
             const person = persons.find(person => person.id === task.assigned_to_id);
-            console.log(person);
             if (person && person.firstname && person.lastname)
             {
                 task.contact = person.firstname + " " + person.lastname;
@@ -28,11 +27,10 @@ function buildList(taskList, sections, persons) {
             else
             {
                 task.contact = "Non Affecté";
-                task.contact_email = "null@null.com";
+                task.contact_email = ".";
             }
         });
 
-        console.log(tasks);
         sectionEntry.tasks = tasks;
         
         sectionList.push(sectionEntry);
