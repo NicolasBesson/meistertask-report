@@ -116,6 +116,34 @@ class App extends Component {
     });
   }
 
+  getComments(token, task_id) {
+    return fetch(
+      "https://" +
+        this.host +
+        "/api/tasks//" +
+        task_id +
+        "/comments",
+      {
+        method: "GET",
+        Host: this.host,
+        //mode: "no-cors",
+        headers: {
+          Accept: "*/*",
+          //"Authorization": "Bearer " + token,
+          Authorization: "Bearer " + token,
+          "cache-control": "no-cache",
+          "Content-Type": "application/json"
+        }
+      }
+    ).then(function(response) {
+      if (response.ok) {
+        return response.json();
+      } else {
+        console.log("error");
+      }
+    });
+  }
+
   getPersons(token, project_id) {
     return fetch(
       "https://" + this.host + "/api/projects/" + project_id + "/persons",
@@ -189,9 +217,9 @@ class App extends Component {
     } else {
       return (
         <div>
-          <div className="jumbotron jumbotron-fluid">
+          <div className="jumbotron jumbotron-fluid title">
             <div className="container">
-              <h1>Compte rendu de tâches</h1>
+              <h1>Liste des sujets</h1>
             </div>
           </div>
           <div className="container">
