@@ -23,10 +23,18 @@ a:active {
   text-decoration: none;
 }
 
+.card.task-card {
+  border: 0px;
+  padding: .05rem 01.25rem;
+  background-color: white;
+  border: 0px solid rgba(0,0,0,.125);
+}
+
 .card-header.task-card {
   border: 0px;
   padding: .05rem 01.25rem;
   background-color: white;
+  border: 0px solid rgba(0,0,0,.125);
 }
 
 .card-header.section-card-header
@@ -35,4 +43,16 @@ a:active {
 }
 .card-body.section-card-body {
   padding: .25rem;
+}
+
+.jumbotron.title {
+  padding: 1rem 2rem;
+}
+@media print {
+  .card.section-entry {
+      page-break-after: auto;
+      page-break-inside: avoid;
+    }
+  .card-body.section-card-body {page-break-inside: avoid;}
+
 }

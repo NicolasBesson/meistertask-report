@@ -18,24 +18,17 @@ function renderContactFull(contact, contact_email) {
 
 function Task(props) {
   return (
-    <div className="card">
+    <div className="card task-card">
       <div className="card-header task-card" id={"heading_" + props.task.id}>
         <a href={"https://www.meistertask.com/app/task/"+props.task.token} target="_blank">
           <img src="./assets/pencil.svg"></img>
         </a>
-        <button
-          className="btn btn-link link"
-          data-toggle="collapse"
-          data-target={"#collapse_" + props.task.id}
-          aria-expanded="true"
-          aria-controls={"collapse_" + props.task.id}
-        >
+        &nbsp;&nbsp;&nbsp;
           {props.task.name}&nbsp;&nbsp;&nbsp;
           {props.task.contact_email === "."
             ? renderContactEmpty(props.task.contact)
             : renderContactFull(props.task.contact, props.task.contact_email)}
-        </button>
-      </div>
+     </div>
 
       <div
         id={"collapse_" + props.task.id}
