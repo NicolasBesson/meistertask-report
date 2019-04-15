@@ -17,3 +17,22 @@ a:active {
   color: black;
   text-decoration: none;
 }
+
+.btn-link.link {
+  color: black;
+  text-decoration: none;
+}
+
+.card-header.task-card {
+  border: 0px;
+  padding: .05rem 01.25rem;
+  background-color: white;
+}
+
+.card-header.section-card-header
+{
+  padding: .05rem 01.25rem;
+}
+.card-body.section-card-body {
+  padding: .25rem;
+}

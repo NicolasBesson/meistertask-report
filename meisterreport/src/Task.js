@@ -19,9 +19,12 @@ function renderContactFull(contact, contact_email) {
 function Task(props) {
   return (
     <div className="card">
-      <div className="card-header" id={"heading_" + props.task.id}>
+      <div className="card-header task-card" id={"heading_" + props.task.id}>
+        <a href={"https://www.meistertask.com/app/task/"+props.task.token} target="_blank">
+          <img src="./assets/pencil.svg"></img>
+        </a>
         <button
-          className="btn btn-link"
+          className="btn btn-link link"
           data-toggle="collapse"
           data-target={"#collapse_" + props.task.id}
           aria-expanded="true"

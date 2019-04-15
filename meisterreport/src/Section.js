@@ -3,9 +3,14 @@ import PropTypes from "prop-types";
 import TaskList from "./TaskList";
 
 function Section(props) {
+  let style_section = { 
+    "font-size": "150%",
+    color: '#' + props.section.color, 
+  };
+
   return (
     <div className="card">
-      <div className="card-header" id={"heading_" + props.section.id}>
+      <div className="card-header section-card-header" id={"heading_" + props.section.id}>
         <button
           className="btn btn-link"
           data-toggle="collapse"
@@ -13,12 +18,12 @@ function Section(props) {
           aria-expanded="true"
           aria-controls={"collapse_" + props.section.id}
         >
-          <h2>
+          <div style={style_section}>
             {props.section.name}&nbsp;
             <span className="badge badge-info">
               {props.section.tasks.length}
             </span>
-          </h2>
+          </div>
         </button>
       </div>
 
@@ -28,7 +33,7 @@ function Section(props) {
         aria-labelledby={"heading_" + props.section.id}
         data-parent="#accordion"
       >
-        <div className="card-body">
+        <div className="card-body section-card-body">
           <TaskList tasks={props.section.tasks} />
         </div>
       </div>
