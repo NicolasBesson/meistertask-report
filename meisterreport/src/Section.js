@@ -1,10 +1,10 @@
 import React from "react";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 import TaskList from "./TaskList";
 
 function Section(props) {
   let style_section = {
-    "font-size": "150%",
+    "fontSize": "150%",
     color: "#" + props.section.color
   };
 

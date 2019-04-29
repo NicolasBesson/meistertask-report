@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import "./App.css";
+import {AppContext, options} from './Context';
 
 import SectionList from "./SectionList";
+import { Button} from 'react-bootstrap';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+
 /*
 const taskslist = [
   {
@@ -204,9 +208,11 @@ class App extends Component {
       .catch(err => {
         console.log(err);
       });
+    //this.setState({option: options.agenda});
   }
 
   render() {
+    var context = this.context;
     if (
       !this.state.projectList ||
       !this.state.sectionsList ||
@@ -217,9 +223,16 @@ class App extends Component {
     } else {
       return (
         <div>
+          <div>
+            <ButtonGroup aria-label="Basic example">
+              <Button variant="secondary">Rapport</Button>
+              <Button variant="secondary">Ordre du jour</Button>
+              <Button variant="secondary">Avancement</Button>
+            </ButtonGroup>
+          </div>
           <div className="jumbotron jumbotron-fluid title">
             <div className="container">
-              <h1>Liste des sujets</h1>
+              <h1>{context.title}</h1>
             </div>
           </div>
           <div className="container">
@@ -234,5 +247,5 @@ class App extends Component {
     }
   }
 }
-
+App.contextType = AppContext;
 export default App;
