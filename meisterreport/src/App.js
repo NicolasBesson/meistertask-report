@@ -92,13 +92,41 @@ class App extends Component {
     });
   }
 
-  getTasks(token, project_id) {
+  getTasksOpened(token, project_id) {
     return fetch(
       "https://" +
         this.host +
         "/api/projects/" +
         project_id +
         "/tasks?status=open",
+      {
+        method: "GET",
+        Host: this.host,
+        //mode: "no-cors",
+        headers: {
+          Accept: "*/*",
+          //"Authorization": "Bearer " + token,
+          Authorization: "Bearer " + token,
+          "cache-control": "no-cache",
+          "Content-Type": "application/json"
+        }
+      }
+    ).then(function(response) {
+      if (response.ok) {
+        return response.json();
+      } else {
+        console.log("error");
+      }
+    });
+  }
+
+  getTasksCompleted(token, project_id) {
+    return fetch(
+      "https://" +
+        this.host +
+        "/api/projects/" +
+        project_id +
+        "/tasks?status=completed",
       {
         method: "GET",
         Host: this.host,
@@ -194,9 +222,16 @@ class App extends Component {
       .catch(err => {
         console.log(err);
       });
-    this.getTasks(this.token, this.project_id)
+    this.getTasksOpened(this.token, this.project_id)
       .then(response => {
         this.setState({ tasksList: response });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    this.getTasksCompleted(this.token, this.project_id)
+      .then(response => {
+        this.setState({ tasksListCompleted: response });
       })
       .catch(err => {
         console.log(err);
@@ -217,6 +252,7 @@ class App extends Component {
       !this.state.projectList ||
       !this.state.sectionsList ||
       !this.state.tasksList ||
+      !this.state.tasksListCompleted ||
       !this.state.personsList
     ) {
       return <div>Loading ...</div>;
@@ -237,7 +273,7 @@ class App extends Component {
           </div>
           <div className="container">
             <SectionList
-              taskList={this.state.tasksList}
+              taskList={this.state.tasksList.concat(this.state.tasksListCompleted)}
               sections={this.state.sectionsList}
               persons={this.state.personsList}
             />
