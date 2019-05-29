@@ -48,7 +48,7 @@ class SectionList extends React.Component {
     render() {
         return (
             <div id="accordion" className="sectionlist">
-                {this.sectionList.map(sectionEntry => <Section section={sectionEntry} /> )}
+                {this.sectionList.map(sectionEntry => <Section key={sectionEntry.id} section={sectionEntry} /> )}
             </div>
         );
     }

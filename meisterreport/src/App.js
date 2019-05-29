@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
-import {AppContext, options} from './Context';
+import { AppContext, options } from './Context';
 
 import SectionList from "./SectionList";
-import { Button} from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 /*
@@ -42,7 +42,13 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      mode: options.followup
+    };
+
+    this.asReport = this.asReport.bind(this);
+    this.asAgenda = this.asAgenda.bind(this);
+    this.asFollowUp = this.asFollowUp.bind(this);
   }
 
   getProjects(token) {
@@ -56,7 +62,7 @@ class App extends Component {
         "cache-control": "no-cache",
         "Content-Type": "application/json"
       }
-    }).then(function(response) {
+    }).then(function (response) {
       if (response.ok) {
         return response.json();
       } else {
@@ -68,10 +74,10 @@ class App extends Component {
   getSections(token, project_id) {
     return fetch(
       "https://" +
-        this.host +
-        "/api/projects/" +
-        project_id +
-        "/sections?status=active",
+      this.host +
+      "/api/projects/" +
+      project_id +
+      "/sections?status=active",
       {
         method: "GET",
         Host: this.host,
@@ -83,7 +89,7 @@ class App extends Component {
           "Content-Type": "application/json"
         }
       }
-    ).then(function(response) {
+    ).then(function (response) {
       if (response.ok) {
         return response.json();
       } else {
@@ -95,10 +101,10 @@ class App extends Component {
   getTasksOpened(token, project_id) {
     return fetch(
       "https://" +
-        this.host +
-        "/api/projects/" +
-        project_id +
-        "/tasks?status=open",
+      this.host +
+      "/api/projects/" +
+      project_id +
+      "/tasks?status=open",
       {
         method: "GET",
         Host: this.host,
@@ -111,7 +117,7 @@ class App extends Component {
           "Content-Type": "application/json"
         }
       }
-    ).then(function(response) {
+    ).then(function (response) {
       if (response.ok) {
         return response.json();
       } else {
@@ -123,10 +129,10 @@ class App extends Component {
   getTasksCompleted(token, project_id) {
     return fetch(
       "https://" +
-        this.host +
-        "/api/projects/" +
-        project_id +
-        "/tasks?status=completed",
+      this.host +
+      "/api/projects/" +
+      project_id +
+      "/tasks?status=completed",
       {
         method: "GET",
         Host: this.host,
@@ -139,7 +145,7 @@ class App extends Component {
           "Content-Type": "application/json"
         }
       }
-    ).then(function(response) {
+    ).then(function (response) {
       if (response.ok) {
         return response.json();
       } else {
@@ -151,10 +157,10 @@ class App extends Component {
   getComments(token, task_id) {
     return fetch(
       "https://" +
-        this.host +
-        "/api/tasks//" +
-        task_id +
-        "/comments",
+      this.host +
+      "/api/tasks//" +
+      task_id +
+      "/comments",
       {
         method: "GET",
         Host: this.host,
@@ -167,7 +173,7 @@ class App extends Component {
           "Content-Type": "application/json"
         }
       }
-    ).then(function(response) {
+    ).then(function (response) {
       if (response.ok) {
         return response.json();
       } else {
@@ -191,7 +197,7 @@ class App extends Component {
           "Content-Type": "application/json"
         }
       }
-    ).then(function(response) {
+    ).then(function (response) {
       if (response.ok) {
         return response.json();
       } else {
@@ -246,8 +252,23 @@ class App extends Component {
     //this.setState({option: options.agenda});
   }
 
+  asReport() {
+    this.context.mode = options.report;
+    this.setState({ mode: options.report });
+  }
+
+  asAgenda() {
+    this.context.mode = options.agenda;
+    this.setState({ mode: options.agenda });
+  }
+
+  asFollowUp() {
+    this.context.mode = options.followup;
+    this.setState({ mode: options.followup });
+  }
+
+
   render() {
-    var context = this.context;
     if (
       !this.state.projectList ||
       !this.state.sectionsList ||
@@ -261,23 +282,29 @@ class App extends Component {
         <div>
           <div>
             <ButtonGroup aria-label="Basic example">
-              <Button variant="secondary">Rapport</Button>
-              <Button variant="secondary">Ordre du jour</Button>
-              <Button variant="secondary">Avancement</Button>
+              <Button variant="secondary" onClick={this.asReport}>Rapport</Button>
+              <Button variant="secondary" onClick={this.asAgenda}>Ordre du jour</Button>
+              <Button variant="secondary" onClick={this.asFollowUp}>Avancement</Button>
             </ButtonGroup>
           </div>
-          <div className="jumbotron jumbotron-fluid title">
-            <div className="container">
-              <h1>{context.title}</h1>
+          <AppContext.Provider value={this.state.mode}>
+            <div className="jumbotron jumbotron-fluid title">
+              <AppContext.Consumer>
+                {({ title }) => (
+                  <div className="container">
+                    <h1>{title}</h1>
+                  </div>
+                )}
+              </AppContext.Consumer>
             </div>
-          </div>
-          <div className="container">
-            <SectionList
-              taskList={this.state.tasksList.concat(this.state.tasksListCompleted)}
-              sections={this.state.sectionsList}
-              persons={this.state.personsList}
-            />
-          </div>
+            <div className="container">
+              <SectionList
+                taskList={this.state.tasksList.concat(this.state.tasksListCompleted)}
+                sections={this.state.sectionsList}
+                persons={this.state.personsList}
+              />
+            </div>
+          </AppContext.Provider>
         </div>
       );
     }
