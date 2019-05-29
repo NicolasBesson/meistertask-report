@@ -5,8 +5,8 @@ export const options =
 {
     report: {
         title: "Compte rendu de réunion",
-        edit_icon: true,
-        task_details: false
+        edit_icon: false,
+        task_details: true
     },
     agenda: {
         title: "Ordre du jour",

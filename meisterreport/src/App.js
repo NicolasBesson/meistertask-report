@@ -280,7 +280,7 @@ class App extends Component {
     } else {
       return (
         <div>
-          <div>
+          <div className="menu">
             <ButtonGroup aria-label="Basic example">
               <Button variant="secondary" onClick={this.asReport}>Rapport</Button>
               <Button variant="secondary" onClick={this.asAgenda}>Ordre du jour</Button>
