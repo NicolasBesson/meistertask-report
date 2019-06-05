@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 //import PropTypes from "prop-types";
 import "./Task.css";
-import { AppContext } from './Context';
+import { AppContext } from '../context/Context';
 
 class Task extends Component {
 

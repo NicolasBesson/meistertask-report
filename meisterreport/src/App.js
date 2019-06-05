@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./App.css";
-import { AppContext, options } from './Context';
+import { AppContext, options } from './context/Context';
 
-import Report from "./Report";
+import Report from "./report/Report";
 import { Button } from 'react-bootstrap';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
