@@ -3,12 +3,13 @@ import React, { Component } from 'react';
 import "./Task.css";
 import { AppContext } from './Context';
 
-
 class Task extends Component {
 
   constructor(props) {
     super(props);
     this.task = props.task;
+    this.token = props.token;
+    this.host = props.host;
   }
 
   renderContactEmpty(contact) {
@@ -28,7 +29,7 @@ class Task extends Component {
   renderEdit() {
     return (
       <span>
-        <a href={"https://www.meistertask.com/app/task/" + this.task.token} target="_blank" rel="noopener noreferrer">
+        <a href={"https://" + this.host + "/app/task/" + this.task.token} target="_blank" rel="noopener noreferrer">
           <img src="./assets/pencil.svg" alt="Edit"></img>
         </a>
         &nbsp;&nbsp;&nbsp;
@@ -77,10 +78,6 @@ class Task extends Component {
     );
   }
 }
-
-// Task.propTypes = {
-//   name: PropTypes.string.isRequired
-// };
 
 export default Task;
 
