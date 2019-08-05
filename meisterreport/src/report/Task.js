@@ -1,15 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 //import PropTypes from "prop-types";
 import "./Task.css";
 import { AppContext } from '../context/Context';
 
-class Task extends Component {
+class Task extends React.Component {
 
   constructor(props) {
     super(props);
     this.task = props.task;
     this.token = props.token;
     this.host = props.host;
+    this.state = {isVisible: true};
+
+    this.onClickHide = this.onClickHide.bind(this);
   }
 
   renderContactEmpty(contact) {
@@ -24,6 +27,10 @@ class Task extends Component {
         </a>
       </div>
     );
+  }
+
+  onClickHide() {
+    this.setState({isVisible: false});
   }
 
   renderEdit() {
@@ -44,38 +51,66 @@ class Task extends Component {
     );
   }
 
-  render() {
+  renderHide() {
     return (
-      <div className="card task-card">
-        <div className="card-header task-card" id={"heading_" + this.task.id}>
+      <span>
+        <img src="./assets/hide.svg" alt="Hide" width="14" height="16" onClick={this.onClickHide.bind(this)}></img>
+        &nbsp;&nbsp;&nbsp;
+      </span>
+    );
+  }
+
+  renderHideEmpty() {
+    return (
+      <span>
+      </span>
+    );
+  }
+
+  render() {
+    if (this.state.isVisible === false)
+    {
+      return "";
+    }
+    else
+    {
+      return (
+        <div className="card task-card">
+          <div className="card-header task-card" id={"heading_" + this.task.id}>
+            <AppContext.Consumer>
+              {({ edit_icon }) => (
+                edit_icon ? this.renderEdit() : this.renderEditEmpty()
+              )}
+            </AppContext.Consumer>
+            <AppContext.Consumer>
+              {({ show_hide }) => (
+                show_hide ? this.renderHide() : this.renderHideEmpty()
+              )}
+            </AppContext.Consumer>
+            {this.task.name}&nbsp;&nbsp;&nbsp;
+              {this.task.contact_email === "."
+              ? this.renderContactEmpty(this.task.contact)
+              : this.renderContactFull(this.task.contact, this.task.contact_email)}
+          </div>
           <AppContext.Consumer>
-            {({ edit_icon }) => (
-              edit_icon ? this.renderEdit() : this.renderEditEmpty()
+            {({ task_details }) => (
+              <div
+                id={"collapse_" + this.task.id}
+                className={task_details ? "collapse show" : "collapse"}
+                aria-labelledby={"heading_" + this.task.id}
+                data-parent="#accordionTask"
+              >
+                <div className="card-body">
+                  <span className="task_note">
+                    <div dangerouslySetInnerHTML={{ __html: this.task.notes_html }} />
+                  </span>
+                </div>
+              </div>
             )}
           </AppContext.Consumer>
-          {this.task.name}&nbsp;&nbsp;&nbsp;
-            {this.task.contact_email === "."
-            ? this.renderContactEmpty(this.task.contact)
-            : this.renderContactFull(this.task.contact, this.task.contact_email)}
         </div>
-        <AppContext.Consumer>
-          {({ task_details }) => (
-            <div
-              id={"collapse_" + this.task.id}
-              className={task_details ? "collapse show" : "collapse"}
-              aria-labelledby={"heading_" + this.task.id}
-              data-parent="#accordionTask"
-            >
-              <div className="card-body">
-                <span className="task_note">
-                  <div dangerouslySetInnerHTML={{ __html: this.task.notes_html }} />
-                </span>
-              </div>
-            </div>
-          )}
-        </AppContext.Consumer>
-      </div>
-    );
+      );
+    }
   }
 }
 

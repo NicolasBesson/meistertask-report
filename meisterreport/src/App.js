@@ -17,6 +17,7 @@ class App extends Component {
     this.asReport = this.asReport.bind(this);
     this.asAgenda = this.asAgenda.bind(this);
     this.asFollowUp = this.asFollowUp.bind(this);
+    this.asActionReport = this.asActionReport.bind(this);
   }
 
   getProjects(token) {
@@ -65,6 +66,10 @@ class App extends Component {
     this.setState({ mode: options.followup });
   }
 
+  asActionReport() {
+    this.context.mode = options.actionreport;
+    this.setState({ mode: options.actionreport });
+  }
 
   render() {
       return (
@@ -74,6 +79,7 @@ class App extends Component {
               <Button variant="secondary" onClick={this.asReport}>Rapport</Button>
               <Button variant="secondary" onClick={this.asAgenda}>Ordre du jour</Button>
               <Button variant="secondary" onClick={this.asFollowUp}>Avancement</Button>
+              <Button variant="secondary" onClick={this.asActionReport}>Retours/Actions</Button>
             </ButtonGroup>
           </div>
           <AppContext.Provider value={this.state.mode}>

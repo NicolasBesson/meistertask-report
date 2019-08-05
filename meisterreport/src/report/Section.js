@@ -1,14 +1,17 @@
 import React from "react";
 import TaskList from "./TaskList";
+import { AppContext } from '../context/Context';
 
 class Section extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {isVisible: true};
 
     this.host = props.host;
     this.token = props.token;
     this.section = props.section;
+
+    this.onClickHide = this.onClickHide.bind(this);
   }
 
   componentDidMount() {
@@ -85,12 +88,36 @@ class Section extends React.Component {
     });
   }
 
+  onClickHide() {
+    this.setState({isVisible: false});
+  }
+
+  renderHide() {
+    return (
+      <span>
+        &nbsp;&nbsp;&nbsp;
+        <img src="./assets/hide.svg" alt="Hide" width="20" height="20" onClick={this.onClickHide.bind(this)}></img>
+      </span>
+    );
+  }
+
+  renderHideEmpty() {
+    return (
+      <span>
+      </span>
+    );
+  }
+
+
   render() {
     if (!this.state.tasksList ||
         !this.state.tasksListCompleted) {
       return (
         <div className="loading">Loading sections ...</div>
       );
+    }
+    else if (this.state.isVisible === false) {
+      return ("");
     }
     else {
       let style_section = {
@@ -109,6 +136,11 @@ class Section extends React.Component {
             <div style={style_section}>
               {this.section.name}&nbsp;
             <span className="badge badge-info">{tasksList.length}</span>
+            <AppContext.Consumer>
+              {({ show_hide }) => (
+                show_hide ? this.renderHide() : this.renderHideEmpty()
+              )}
+            </AppContext.Consumer>
             </div>
           </div>
 
