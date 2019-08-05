@@ -96,7 +96,7 @@ class Section extends React.Component {
     return (
       <span>
         &nbsp;&nbsp;&nbsp;
-        <img src="./assets/hide.svg" alt="Hide" width="20" height="20" onClick={this.onClickHide.bind(this)}></img>
+        <img src="./assets/hide.svg" alt="" width="20" height="20" onClick={this.onClickHide.bind(this)}></img>
       </span>
     );
   }

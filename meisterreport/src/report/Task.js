@@ -37,7 +37,7 @@ class Task extends React.Component {
     return (
       <span>
         <a href={"https://" + this.host + "/app/task/" + this.task.token} target="_blank" rel="noopener noreferrer">
-          <img src="./assets/pencil.svg" alt="Edit"></img>
+          <img src="./assets/pencil.svg" alt=""></img>
         </a>
         &nbsp;&nbsp;&nbsp;
       </span>
@@ -54,7 +54,7 @@ class Task extends React.Component {
   renderHide() {
     return (
       <span>
-        <img src="./assets/hide.svg" alt="Hide" width="14" height="16" onClick={this.onClickHide.bind(this)}></img>
+        <img src="./assets/hide.svg" alt="" width="14" height="16" onClick={this.onClickHide.bind(this)}></img>
         &nbsp;&nbsp;&nbsp;
       </span>
     );
