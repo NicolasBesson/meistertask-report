@@ -76,11 +76,21 @@ class TaskList extends React.Component {
         }
         else {
             // Assign person to task
-            let tasks = this.assignedPerson(this.tasks, this.state.personsList);
+            const tasksList = this.assignedPerson(this.tasks, this.state.personsList);
+            
+            const orderedTasksList = tasksList.sort(function(a, b) {
+                if (a.sequence > b.sequence) {
+                  return 1;
+                }
+                if (a.sequence < b.sequence) {
+                  return -1;
+                }
+                return 0;
+              });
 
             return (
                 <div>
-                    {tasks.map(task => <Task key={task.id} task={task} token={this.token} host={this.host}/>)}
+                    {orderedTasksList.map(task => <Task key={task.id} task={task} token={this.token} host={this.host}/>)}
                 </div>
             );
         }

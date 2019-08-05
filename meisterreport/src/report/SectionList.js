@@ -11,9 +11,19 @@ class SectionList extends React.Component {
     }
 
     render() {
+        const orderedSectionsList = this.sectionsList.sort(function(a, b) {
+            if (a.sequence > b.sequence) {
+              return 1;
+            }
+            if (a.sequence < b.sequence) {
+              return -1;
+            }
+            return 0;
+          });
+
         return (
             <div id="accordion" className="sectionlist">
-                {this.sectionsList.map(sectionEntry => <Section key={sectionEntry.id} token={this.token} host={this.host} section={sectionEntry} /> )}
+                {orderedSectionsList.map(sectionEntry => <Section key={sectionEntry.id} token={this.token} host={this.host} section={sectionEntry} /> )}
             </div>
         );
     }
