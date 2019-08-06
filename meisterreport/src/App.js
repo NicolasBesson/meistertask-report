@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import { AppContext, options } from './context/Context';
 
+import AppConfig from "./config/AppConfig";
 import Report from "./report/Report";
 import { Button } from 'react-bootstrap';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -11,7 +12,11 @@ class App extends Component {
     super(props);
 
     this.state = {
-      mode: options.followup
+      mode: options.followup,
+      isConfigured: false,
+      token: 0,
+      projectID: 0,
+      setTokenAndProject: (tokenValue, projectIDValue) => this.setState({token: tokenValue, projectID: projectIDValue, isConfigured: true})
     };
 
     this.asReport = this.asReport.bind(this);
@@ -72,6 +77,15 @@ class App extends Component {
   }
 
   render() {
+    if (this.state.isConfigured === false)
+    {
+      return (
+          <AppContext.Provider value={this.state}>
+            <AppConfig />
+          </AppContext.Provider>
+      );
+    }
+    else {
       return (
         <div>
           <div className="menu">
@@ -95,14 +109,15 @@ class App extends Component {
             <div className="container">
               <Report
                 host={this.host}
-                token={this.token}
-                projectID={this.project_id}
+                token={this.state.token}
+                projectID={this.state.projectID}
               />
             </div>
           </AppContext.Provider>
         </div>
       );
     }
+  }
 }
 App.contextType = AppContext;
 export default App;

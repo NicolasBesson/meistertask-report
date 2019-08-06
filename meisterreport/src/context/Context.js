@@ -29,5 +29,11 @@ export const options =
     }
 }
 export const AppContext = React.createContext(
-    { mode: options.followup }
+    { 
+       mode: options.followup,
+       isConfigured: false,
+       token: 0,
+       projectID: 0,
+       setTokenAndProject: (tokenValue, projectIDValue) => this.setState({token: tokenValue, projectID: projectIDValue, isConfigured: true})
+    }
 );
