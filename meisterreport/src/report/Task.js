@@ -67,6 +67,16 @@ class Task extends React.Component {
     );
   }
 
+  renderStatus(status){
+    if (status === 2) {
+      return (<span className="badge badge-warning">Terminé</span>);
+    }
+    else {
+      return;
+    }
+
+  }
+
   render() {
     if (this.state.isVisible === false)
     {
@@ -87,7 +97,8 @@ class Task extends React.Component {
                 show_hide ? this.renderHide() : this.renderHideEmpty()
               )}
             </AppContext.Consumer>
-            {this.task.name}&nbsp;&nbsp;&nbsp;
+            {this.task.name}&nbsp;&nbsp;
+              {this.renderStatus(this.task.status)}&nbsp;&nbsp; 
               {this.task.contact_email === "."
               ? this.renderContactEmpty(this.task.contact)
               : this.renderContactFull(this.task.contact, this.task.contact_email)}
