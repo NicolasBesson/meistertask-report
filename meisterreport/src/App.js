@@ -16,13 +16,17 @@ class App extends Component {
       isConfigured: false,
       token: 0,
       projectID: 0,
-      setTokenAndProject: (tokenValue, projectIDValue) => this.setState({token: tokenValue, projectID: projectIDValue, isConfigured: true})
+      setTokenAndProject: (tokenValue, projectIDValue) => { localStorage.setItem("access-token", tokenValue);
+                                                            localStorage.setItem("project-id", projectIDValue);
+                                                            this.setState({token: tokenValue, projectID: projectIDValue, isConfigured: true});
+                                                          }
     };
 
     this.asReport = this.asReport.bind(this);
     this.asAgenda = this.asAgenda.bind(this);
     this.asFollowUp = this.asFollowUp.bind(this);
     this.asActionReport = this.asActionReport.bind(this);
+    this.handleClearSettings = this.handleClearSettings.bind(this);
   }
 
   getProjects(token) {
@@ -46,10 +50,10 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.token =
-      "5091adbec66a04504a4d48ea479301a38a701b08427f8a54f54577c717e36d4b";
     this.host = "www.meistertask.com";
-    this.project_id = "3130620";
+
+    this.handleLoadSettings();
+
   }
 
   componentDidMount() {
@@ -76,6 +80,27 @@ class App extends Component {
     this.setState({ mode: options.actionreport });
   }
 
+  handleLoadSettings() {
+    const tokenValue = localStorage.getItem("access-token");
+    const projectIDValue = localStorage.getItem("project-id");
+    
+    if (projectIDValue === null || 
+        tokenValue === null) {
+      this.setState({isConfigured: false})
+    }
+    else {
+      this.setState({projectID: projectIDValue})
+      this.setState({token: tokenValue})
+      this.setState({isConfigured: true})
+    }
+  }
+
+  handleClearSettings() {
+      localStorage.removeItem("access-token");
+      localStorage.removeItem("project-id");
+      this.setState({isConfigured: false});
+  }
+
   render() {
     if (this.state.isConfigured === false)
     {
@@ -90,6 +115,7 @@ class App extends Component {
         <div>
           <div className="menu">
             <ButtonGroup aria-label="Basic example">
+              <Button variant="danger" onClick={() => { if (window.confirm('Voulez vous supprimer les paramètres de configuration ?')) this.handleClearSettings() }}>X</Button>              
               <Button variant="secondary" onClick={this.asReport}>Rapport</Button>
               <Button variant="secondary" onClick={this.asAgenda}>Ordre du jour</Button>
               <Button variant="secondary" onClick={this.asFollowUp}>Avancement</Button>
