@@ -22,7 +22,7 @@ export const options =
         show_hide: false
     },
     actionreport: {
-        title: "Actions et Retours attendus pour Oralia",
+        title: "Actions et Retours attendus",
         edit_icon: false,
         task_details: true,
         show_hide: true
