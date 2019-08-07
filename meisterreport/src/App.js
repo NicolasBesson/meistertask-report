@@ -27,6 +27,7 @@ class App extends Component {
     this.asFollowUp = this.asFollowUp.bind(this);
     this.asActionReport = this.asActionReport.bind(this);
     this.handleClearSettings = this.handleClearSettings.bind(this);
+    this.handleForcePageReload = this.handleForcePageReload.bind(this);
   }
 
   getProjects(token) {
@@ -96,9 +97,13 @@ class App extends Component {
   }
 
   handleClearSettings() {
-      localStorage.removeItem("access-token");
-      localStorage.removeItem("project-id");
-      this.setState({isConfigured: false});
+    localStorage.removeItem("access-token");
+    localStorage.removeItem("project-id");
+    this.setState({isConfigured: false});
+  }
+
+  handleForcePageReload() {
+    document.location.reload(true);
   }
 
   render() {
@@ -120,6 +125,7 @@ class App extends Component {
               <Button variant="secondary" onClick={this.asAgenda}>Ordre du jour</Button>
               <Button variant="secondary" onClick={this.asFollowUp}>Avancement</Button>
               <Button variant="secondary" onClick={this.asActionReport}>Retours/Actions</Button>
+              <Button variant="success" onClick={this.handleForcePageReload}><img src="./assets/reload.svg"  width="20" height="20"/></Button>
             </ButtonGroup>
           </div>
           <AppContext.Provider value={this.state.mode}>
